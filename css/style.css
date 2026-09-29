@@ -432,3 +432,44 @@ th {
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold-dark); }
+
+/* =========================================================
+   LOGIN — ajustes de espaçamento
+   ========================================================= */
+.login-page .card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.login-page .card input,
+.login-page .card button {
+  margin: 0;
+  width: 100%;
+}
+
+.login-page .card input {
+  padding: 12px 14px;
+}
+
+.login-page .card button {
+  margin-top: 8px;
+  padding: 12px 16px;
+  font-size: .95rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.login-page h1 {
+  margin-bottom: 0;
+}
+
+.login-page .subtitle {
+  margin-top: -8px;
+  margin-bottom: 4px;
+}
+
+.login-page .logo {
+  margin-bottom: 0;
+}
