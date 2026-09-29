@@ -2,16 +2,22 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Login — Painel Admin</title>
+<title>SAER — Painel Administrativo</title>
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="login-page">
   <form id="login-form" class="card">
-    <h1>Painel Administrativo</h1>
+    <img src="img/saer-logo.png" alt="SAER" class="logo">
+    <h1>SAER</h1>
+    <div class="subtitle">Serviço Aeropolicial</div>
     <input type="email" id="email" placeholder="Email" required>
     <input type="password" id="password" placeholder="Senha" required>
-    <button type="submit">Entrar</button>
-    <p id="msg"></p>
+    <button type="submit" style="width:100%">Entrar</button>
+    <p id="msg" class="hint" style="margin-top:14px"></p>
   </form>
 
   <script type="module">
@@ -20,7 +26,6 @@
     const form = document.getElementById('login-form');
     const msg  = document.getElementById('msg');
 
-    // Se já estiver logado, vai direto pro painel
     const { data: { session } } = await supabase.auth.getSession();
     if (session) window.location.href = 'painel.html';
 
