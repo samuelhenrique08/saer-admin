@@ -1,0 +1,369 @@
+* {
+    box-sizing: border-box;
+    font-family: system-ui, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #0f1115;
+    color: #e6e6e6;
+}
+
+/* LOGIN */
+.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login-page .card {
+    width: 340px;
+}
+
+.login-page h1 {
+    font-size: 1.2rem;
+    margin: 0 0 16px;
+}
+
+/* GERAL */
+.card {
+    background: #1a1d24;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+}
+
+h2 {
+    font-size: 1rem;
+    margin: 0 0 12px;
+    color: #9fb3ff;
+}
+
+input,
+select,
+textarea,
+button {
+    font: inherit;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #2a2f3a;
+    background: #12151c;
+    color: #e6e6e6;
+    margin: 4px 4px 4px 0;
+}
+
+button {
+    background: #3b6ef5;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    padding: 8px 14px;
+}
+
+button:hover {
+    background: #2f5bdc;
+}
+
+button.danger {
+    background: #d94b4b;
+}
+
+button.danger:hover {
+    background: #b93a3a;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: #161922;
+    border-bottom: 1px solid #222;
+}
+
+header h1 {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* TABELA */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: .9rem;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #232833;
+}
+
+th {
+    color: #8b98b8;
+    font-weight: 500;
+    font-size: .8rem;
+    text-transform: uppercase;
+}
+
+.ok {
+    color: #5bd97a;
+}
+
+.fail {
+    color: #e46a6a;
+}
+
+.exempt {
+    color: #8b98b8;
+    font-style: italic;
+}
+
+.hint {
+    font-size: .85rem;
+    color: #8b98b8;
+}
+
+.hint code {
+    color: #c9d1ff;
+    font-size: .8rem;
+}
+
+#process-msg {
+    font-size: .85rem;
+    color: #9fb3ff;
+    min-height: 1em;
+}
+
+/* Formulário de membro */
+#form-member {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+#form-member input,
+#form-member select {
+    flex: 1 1 140px;
+}
+
+#form-member button {
+    flex: 0 0 auto;
+}
+
+/* ---------- Transições gerais ---------- */
+* {
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+
+button {
+    transition: background-color .15s ease, transform .08s ease;
+}
+
+button:active {
+    transform: scale(.97);
+}
+
+/* ---------- Card head ---------- */
+.card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.card-head input {
+    flex: 1 1 auto;
+    max-width: 320px;
+}
+
+/* ---------- Linhas da tabela ---------- */
+#tbl-members tbody tr {
+    transition: background-color .15s ease, opacity .2s ease;
+}
+
+#tbl-members tbody tr:hover {
+    background: #1f2430;
+}
+
+#tbl-members tbody tr.removing {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+/* ---------- Botões pequenos ---------- */
+button.sm {
+    padding: 4px 8px;
+    font-size: .8rem;
+}
+
+button.ghost {
+    background: transparent;
+    border: 1px solid #2a2f3a;
+    color: #c9d1ff;
+}
+
+button.ghost:hover {
+    background: #1f2430;
+}
+
+button.warn {
+    background: #d99a3b;
+}
+
+button.warn:hover {
+    background: #b9832c;
+}
+
+.btn-row {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+/* ---------- Modal ---------- */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 50;
+    transition: opacity .2s ease;
+}
+
+.modal-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal {
+    background: #1a1d24;
+    border-radius: 10px;
+    padding: 20px;
+    width: min(440px, 92vw);
+    transform: translateY(8px) scale(.98);
+    transition: transform .2s ease;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .5);
+}
+
+.modal-backdrop.open .modal {
+    transform: translateY(0) scale(1);
+}
+
+.modal h3 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+}
+
+.modal p {
+    margin: 0 0 12px;
+    color: #9fb3ff;
+    font-size: .9rem;
+}
+
+.modal textarea {
+    width: 100%;
+    resize: vertical;
+    margin-bottom: 12px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.modal ul#history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.modal ul#history-list li {
+    padding: 10px;
+    border-radius: 6px;
+    background: #12151c;
+    margin-bottom: 6px;
+    font-size: .85rem;
+    border-left: 3px solid #d99a3b;
+}
+
+.modal ul#history-list li .date {
+    color: #8b98b8;
+    font-size: .75rem;
+    display: block;
+    margin-top: 4px;
+}
+
+.modal ul#history-list li .empty {
+    color: #8b98b8;
+    font-style: italic;
+}
+
+.modal input,
+.modal select {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* ---------- Toasts ---------- */
+#toasts {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 100;
+}
+
+.toast {
+    background: #1f2430;
+    color: #e6e6e6;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: .85rem;
+    min-width: 220px;
+    border-left: 3px solid #3b6ef5;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .4);
+    transform: translateX(20px);
+    opacity: 0;
+    animation: toast-in .25s forwards;
+}
+
+.toast.success {
+    border-color: #5bd97a;
+}
+
+.toast.error {
+    border-color: #e46a6a;
+}
+
+.toast.fade {
+    animation: toast-out .25s forwards;
+}
+
+@keyframes toast-in {
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toast-out {
+    to {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+}

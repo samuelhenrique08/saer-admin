@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Login — Painel Admin</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page">
+  <form id="login-form" class="card">
+    <h1>Painel Administrativo</h1>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Senha" required>
+    <button type="submit">Entrar</button>
+    <p id="msg"></p>
+  </form>
+
+  <script type="module">
+    import { supabase } from './js/supabase.js';
+
+    const form = document.getElementById('login-form');
+    const msg  = document.getElementById('msg');
+
+    // Se já estiver logado, vai direto pro painel
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) window.location.href = 'painel.html';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.textContent = 'Entrando...';
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) { msg.textContent = 'Erro: ' + error.message; return; }
+      window.location.href = 'painel.html';
+    });
+  </script>
+</body>
+</html>

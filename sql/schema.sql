@@ -1,0 +1,1 @@
+create index if not exists idx_strikes_member on strikes(member_id, created_at desc);

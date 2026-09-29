@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Administrativo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Painel Administrativo</h1>
+        <button id="logout">Sair</button>
+    </header>
+
+    <main>
+        <!-- CADASTRAR MEMBRO -->
+        <section class="card">
+            <h2>Registrar Membro</h2>
+            <form id="form-member">
+                <input type="number" id="m-id" placeholder="ID (ex: 2111)" required>
+                <input type="text" id="m-name" placeholder="Nome" required>
+                <select id="m-division" required>
+                    <option value="">Divisão...</option>
+                    <option value="pcerj">PCERJ</option>
+                    <option value="core">CORE</option>
+                </select>
+                <select id="m-role" required>
+                    <option value="">Cargo...</option>
+                    <option value="comandante">Comandante</option>
+                    <option value="administrador">Administrador</option>
+                    <option value="anjo negro elite">Anjo Negro Elite</option>
+                    <option value="anjo negro">Anjo Negro</option>
+                </select>
+                <button type="submit">Adicionar</button>
+            </form>
+        </section>
+
+        <!-- PROCESSAR PROMPT -->
+        <section class="card">
+            <h2>Processar Prompt</h2>
+            <p class="hint">Cole um prompt por linha no formato:<br>
+                <code>@[INV 2ª] Panda Tenebras | 2111 | 998727354908155988 — 22h:51min:26s</code>
+            </p>
+            <textarea id="prompt-input" rows="8" placeholder="Cole aqui..."></textarea>
+            <button id="btn-process">Processar e atualizar</button>
+            <p id="process-msg"></p>
+        </section>
+
+        <!-- LISTA DE MEMBROS -->
+        <section class="card">
+            <div class="card-head">
+                <h2>Membros</h2>
+                <input type="text" id="search" placeholder="Buscar por nome ou ID...">
+            </div>
+            <table id="tbl-members">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Divisão</th>
+                        <th>Cargo</th>
+                        <th>Strikes</th>
+                        <th>Horas (semana)</th>
+                        <th>Meta</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- MODAL: strike -->
+        <div class="modal-backdrop" id="modal-strike">
+            <div class="modal">
+                <h3>Registrar strike</h3>
+                <p id="strike-member-name"></p>
+                <textarea id="strike-reason" rows="3" placeholder="Motivo (opcional)"></textarea>
+                <div class="modal-actions">
+                    <button id="strike-cancel" class="ghost">Cancelar</button>
+                    <button id="strike-confirm">Registrar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: histórico de strikes -->
+        <div class="modal-backdrop" id="modal-history">
+            <div class="modal">
+                <h3>Strikes de <span id="history-member-name"></span></h3>
+                <ul id="history-list"></ul>
+                <div class="modal-actions">
+                    <button id="history-close" class="ghost">Fechar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: editar membro -->
+        <div class="modal-backdrop" id="modal-edit">
+            <div class="modal">
+                <h3>Editar membro</h3>
+                <p id="edit-member-id"></p>
+
+                <input type="text" id="edit-name" placeholder="Nome" required>
+                <select id="edit-division" required>
+                    <option value="pcerj">PCERJ</option>
+                    <option value="core">CORE</option>
+                </select>
+                <select id="edit-role" required>
+                    <option value="comandante">Comandante</option>
+                    <option value="administrador">Administrador</option>
+                    <option value="anjo negro elite">Anjo Negro Elite</option>
+                    <option value="anjo negro">Anjo Negro</option>
+                </select>
+
+                <div class="modal-actions">
+                    <button id="edit-cancel" class="ghost">Cancelar</button>
+                    <button id="edit-confirm">Salvar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOASTS -->
+        <div id="toasts"></div>
+    </main>
+
+    <script type="module" src="js/painel.js"></script>
+</body>
+
+</html>
