@@ -1,127 +1,138 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SAER — Portal da Transparência</title>
-<link rel="icon" type="image/png" href="img/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/transparencia.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SAER — Portal da Transparência</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/transparencia.css">
 </head>
+
 <body>
 
-<header>
-  <div class="brand">
-    <img src="img/saer-logo.png" alt="SAER">
-    <div class="brand-text">
-      <h1>SAER</h1>
-      <span>Portal da Transparência</span>
-    </div>
-  </div>
-  <a href="index.html" class="ghost-btn">Área Admin</a>
-</header>
+    <header>
+        <div class="brand">
+            <img src="img/saer-logo.png" alt="SAER">
+            <div class="brand-text">
+                <h1>SAER</h1>
+                <span>Portal da Transparência</span>
+            </div>
+        </div>
+        <a href="index.html" class="ghost-btn">Área Admin</a>
+    </header>
 
-<main class="pub-main">
+    <main class="pub-main">
 
-  <!-- RESUMO -->
-  <section class="summary">
-    <div class="stat">
-      <span class="stat-label">Membros ativos</span>
-      <span class="stat-value" id="stat-total">—</span>
-    </div>
-    <div class="stat ok">
-      <span class="stat-label">Metas cumpridas</span>
-      <span class="stat-value" id="stat-ok">—</span>
-    </div>
-    <div class="stat fail">
-      <span class="stat-label">Metas pendentes</span>
-      <span class="stat-value" id="stat-fail">—</span>
-    </div>
-    <div class="stat exempt">
-      <span class="stat-label">Isentos</span>
-      <span class="stat-value" id="stat-exempt">—</span>
-    </div>
-  </section>
+        <!-- RESUMO -->
+        <section class="summary">
+            <div class="stat">
+                <span class="stat-label">Membros ativos</span>
+                <span class="stat-value" id="stat-total">—</span>
+            </div>
+            <div class="stat ok">
+                <span class="stat-label">Metas cumpridas</span>
+                <span class="stat-value" id="stat-ok">—</span>
+            </div>
+            <div class="stat fail">
+                <span class="stat-label">Metas pendentes</span>
+                <span class="stat-value" id="stat-fail">—</span>
+            </div>
+            <div class="stat exempt">
+                <span class="stat-label">Isentos</span>
+                <span class="stat-value" id="stat-exempt">—</span>
+            </div>
+        </section>
 
-  <!-- SEMANA -->
-  <section class="pub-card">
-    <div class="pub-card-head">
-      <h2>Semana atual</h2>
-      <span id="week-label" class="week-label"></span>
-    </div>
+        <!-- TOP 3 DESTAQUES -->
+        <section class="top3-section">
+            <h2 class="top3-title">🏆 Destaques da Semana</h2>
+            <div class="top3-grid" id="top3-grid">
+                <!-- preenchido via JS -->
+            </div>
+        </section>
 
-    <div class="filters">
-      <input type="text" id="search" placeholder="Buscar por nome ou ID...">
-      <select id="filter-status">
-        <option value="">Todos os status</option>
-        <option value="ok">Meta cumprida</option>
-        <option value="fail">Meta incompleta</option>
-        <option value="exempt">Isentos</option>
-      </select>
-      <select id="filter-role">
-        <option value="">Todos os cargos</option>
-        <option value="comandante">Comandante</option>
-        <option value="administrador">Administrador</option>
-        <option value="anjo negro elite">Anjo Negro Elite</option>
-        <option value="anjo negro">Anjo Negro</option>
-      </select>
-      <select id="filter-division">
-        <option value="">Todas as divisões</option>
-        <option value="pcerj">PCERJ</option>
-        <option value="core">CORE</option>
-      </select>
-    </div>
+        <!-- SEMANA -->
+        <section class="pub-card">
+            <div class="pub-card-head">
+                <h2>Semana atual</h2>
+                <span id="week-label" class="week-label"></span>
+            </div>
 
-    <div class="table-wrap">
-      <table id="tbl-public">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Divisão</th>
-            <th>Cargo</th>
-            <th>Horas</th>
-            <th>Meta</th>
-            <th>Strikes</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
+            <div class="filters">
+                <input type="text" id="search" placeholder="Buscar por nome ou ID...">
+                <select id="filter-status">
+                    <option value="">Todos os status</option>
+                    <option value="ok">Meta cumprida</option>
+                    <option value="fail">Meta incompleta</option>
+                    <option value="exempt">Isentos</option>
+                </select>
+                <select id="filter-role">
+                    <option value="">Todos os cargos</option>
+                    <option value="comandante">Comandante</option>
+                    <option value="administrador">Administrador</option>
+                    <option value="anjo negro elite">Anjo Negro Elite</option>
+                    <option value="anjo negro">Anjo Negro</option>
+                </select>
+                <select id="filter-division">
+                    <option value="">Todas as divisões</option>
+                    <option value="pcerj">PCERJ</option>
+                    <option value="core">CORE</option>
+                </select>
+            </div>
 
-    <p class="foot-note">
-      Os dados refletem a semana atual. Metas incompletas indicam que o membro
-      ainda não registrou horas suficientes no sistema.
-    </p>
-  </section>
+            <div class="table-wrap">
+                <table id="tbl-public">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Divisão</th>
+                            <th>Cargo</th>
+                            <th>Horas</th>
+                            <th>Meta</th>
+                            <th>Strikes</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
 
-  <!-- DETALHE DE MEMBRO (modal) -->
-  <div class="modal-backdrop" id="modal-detail">
-    <div class="modal">
-      <h3 id="detail-name">Membro</h3>
-      <p id="detail-meta" class="detail-line"></p>
+            <p class="foot-note">
+                Os dados refletem a semana atual. Metas incompletas indicam que o membro
+                ainda não registrou horas suficientes no sistema.
+            </p>
+        </section>
 
-      <div class="detail-grid">
-        <div><span>ID</span><strong id="d-id">—</strong></div>
-        <div><span>Divisão</span><strong id="d-division">—</strong></div>
-        <div><span>Cargo</span><strong id="d-role">—</strong></div>
-        <div><span>Strikes</span><strong id="d-strikes">—</strong></div>
-        <div><span>Horas</span><strong id="d-hours">—</strong></div>
-        <div><span>Meta</span><strong id="d-meta">—</strong></div>
-      </div>
+        <!-- DETALHE DE MEMBRO (modal) -->
+        <div class="modal-backdrop" id="modal-detail">
+            <div class="modal">
+                <h3 id="detail-name">Membro</h3>
+                <p id="detail-meta" class="detail-line"></p>
 
-      <div class="modal-actions">
-        <button id="detail-close" class="ghost">Fechar</button>
-      </div>
-    </div>
-  </div>
+                <div class="detail-grid">
+                    <div><span>ID</span><strong id="d-id">—</strong></div>
+                    <div><span>Divisão</span><strong id="d-division">—</strong></div>
+                    <div><span>Cargo</span><strong id="d-role">—</strong></div>
+                    <div><span>Strikes</span><strong id="d-strikes">—</strong></div>
+                    <div><span>Horas</span><strong id="d-hours">—</strong></div>
+                    <div><span>Meta</span><strong id="d-meta">—</strong></div>
+                </div>
 
-</main>
+                <div class="modal-actions">
+                    <button id="detail-close" class="ghost">Fechar</button>
+                </div>
+            </div>
+        </div>
 
-<script type="module" src="js/tranparencia.js"></script>
+    </main>
+
+    <script type="module" src="js/tranparencia.js"></script>
 </body>
+
 </html>

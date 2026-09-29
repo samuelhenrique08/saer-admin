@@ -203,3 +203,125 @@
   header { padding: 12px 14px; }
   .brand-text h1 { font-size: .85rem; }
 }
+
+/* =========================================================
+   TOP 3 DESTAQUES
+   ========================================================= */
+.top3-section {
+  margin-bottom: 24px;
+}
+
+.top3-title {
+  font-size: .85rem;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0 0 14px;
+}
+
+.top3-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.top3-card {
+  position: relative;
+  background: linear-gradient(180deg, #151310 0%, #0f0e0b 100%);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  transition: transform .2s ease, border-color .2s ease;
+}
+.top3-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Placeholder quando não há dados */
+.top3-card.empty {
+  opacity: .5;
+  border-style: dashed;
+}
+
+/* Barra decorativa no topo */
+.top3-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+
+/* 1º lugar — ouro */
+.top3-card.rank-1 {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(201,169,97,.15) inset, 0 8px 30px rgba(201,169,97,.12);
+}
+.top3-card.rank-1::before {
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* 2º lugar — prata */
+.top3-card.rank-2 {
+  border-color: #b8b8b8;
+}
+.top3-card.rank-2::before {
+  background: linear-gradient(90deg, transparent, #b8b8b8, transparent);
+}
+
+/* 3º lugar — bronze */
+.top3-card.rank-3 {
+  border-color: #cd7f32;
+}
+.top3-card.rank-3::before {
+  background: linear-gradient(90deg, transparent, #cd7f32, transparent);
+}
+
+.top3-medal {
+  font-size: 1.8rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.5));
+}
+
+.top3-name {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+  word-break: break-word;
+}
+
+.top3-role {
+  font-size: .7rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.top3-hours {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.top3-card.rank-2 .top3-hours { color: #d0d0d0; }
+.top3-card.rank-3 .top3-hours { color: #e0a060; }
+
+.top3-meta {
+  font-size: .72rem;
+  color: var(--success);
+  font-weight: 500;
+}
+
+@media (max-width: 700px) {
+  .top3-grid {
+    grid-template-columns: 1fr;
+  }
+}
