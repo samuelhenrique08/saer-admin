@@ -55,6 +55,14 @@ function escapeHtml(s) {
     })[c]);
 }
 
+function formatWeekShort(weekStartISO) {
+    const start = new Date(weekStartISO + 'T00:00:00');
+    const end = new Date(start);
+    end.setDate(end.getDate() + 6);
+    const fmt = d => d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+    return `${fmt(start)} a ${fmt(end)}`;
+}
+
 // =========================================================
 // ESTADO / CARREGAR
 // =========================================================
@@ -256,6 +264,7 @@ const modalHistory = document.getElementById('modal-history');
 const modalEdit = document.getElementById('modal-edit');
 const modalHours = document.getElementById('modal-hours');
 const modalAdjHistory = document.getElementById('modal-adjust-history');
+const modalResetWeek = document.getElementById('modal-reset-week');
 
 let pendingStrikeId = null;
 let pendingEditId = null;
@@ -265,7 +274,7 @@ let hoursMode = 'add';
 function openModal(el) { el.classList.add('open'); }
 function closeModal(el) { el.classList.remove('open'); }
 
-[modalStrike, modalHistory, modalEdit, modalHours, modalAdjHistory].forEach(m => {
+[modalStrike, modalHistory, modalEdit, modalHours, modalAdjHistory, modalResetWeek].forEach(m => {
     if (m) m.addEventListener('click', (e) => { if (e.target === m) closeModal(m); });
 });
 
@@ -565,6 +574,80 @@ document.getElementById('hours-confirm').addEventListener('click', async () => {
 });
 
 // =========================================================
+// ZERAR SEMANA
+// =========================================================
+const btnResetWeek = document.getElementById('btn-reset-week');
+const resetInput = document.getElementById('reset-confirm-input');
+const resetBtn = document.getElementById('reset-confirm');
+
+btnResetWeek.addEventListener('click', () => {
+    document.getElementById('reset-week-label').textContent = formatWeekShort(weekStart);
+    resetInput.value = '';
+    resetBtn.disabled = true;
+    openModal(modalResetWeek);
+    setTimeout(() => resetInput.focus(), 200);
+});
+
+// Habilita o botão só quando o usuário digita CONFIRMAR
+resetInput.addEventListener('input', () => {
+    resetBtn.disabled = resetInput.value.trim().toUpperCase() !== 'CONFIRMAR';
+});
+
+// Executa o reset
+resetBtn.addEventListener('click', async () => {
+    resetBtn.disabled = true;
+    resetBtn.textContent = 'Zerando...';
+
+    try {
+        // 1) Apaga registros semanais da semana atual
+        const { error: e1 } = await supabase
+            .from('weekly_records')
+            .delete()
+            .eq('week_start', weekStart);
+        if (e1) throw e1;
+
+        // 2) Apaga logs de ajustes da semana atual
+        const { error: e2 } = await supabase
+            .from('hour_adjustments')
+            .delete()
+            .eq('week_start', weekStart);
+        if (e2) throw e2;
+
+        // 3) Cria registros zerados para todos os membros ativos não isentos
+        const exemptRoles = ['comandante', 'administrador'];
+        const zeros = membersCache
+            .filter(m => !exemptRoles.includes(m.role))
+            .map(m => ({
+                member_id: m.id,
+                week_start: weekStart,
+                hours_logged: 0,
+                meta_hours: metaFor(m),
+                passed: false,
+                updated_at: new Date().toISOString()
+            }));
+
+        if (zeros.length) {
+            const { error: e3 } = await supabase
+                .from('weekly_records')
+                .insert(zeros);
+            if (e3) throw e3;
+        }
+
+        closeModal(modalResetWeek);
+        toast('Semana zerada com sucesso', 'success');
+        await loadData();
+    } catch (err) {
+        toast('Erro: ' + err.message, 'error');
+    } finally {
+        resetBtn.textContent = 'Zerar tudo';
+    }
+});
+
+document.getElementById('reset-cancel').addEventListener('click', () => {
+    closeModal(modalResetWeek);
+});
+
+// =========================================================
 // CANCELAR / FECHAR MODAIS
 // =========================================================
 document.getElementById('strike-cancel').addEventListener('click', () => {
@@ -593,6 +676,7 @@ document.addEventListener('keydown', (e) => {
         closeModal(modalEdit);
         closeModal(modalHours);
         closeModal(modalAdjHistory);
+        closeModal(modalResetWeek);
     }
 });
 

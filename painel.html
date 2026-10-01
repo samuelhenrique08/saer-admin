@@ -61,7 +61,12 @@
         <section class="card">
             <div class="card-head">
                 <h2>Membros</h2>
-                <input type="text" id="search" placeholder="Buscar por nome ou ID...">
+                <div class="card-head-actions">
+                    <input type="text" id="search" placeholder="Buscar por nome ou ID...">
+                    <button id="btn-reset-week" class="danger sm" title="Zerar horas da semana atual">
+                        Zerar semana
+                    </button>
+                </div>
             </div>
             <table id="tbl-members">
                 <thead>
@@ -163,6 +168,28 @@
                 <ul id="adj-history-list"></ul>
                 <div class="modal-actions">
                     <button id="adj-history-close" class="ghost">Fechar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: confirmar zerar semana -->
+        <div class="modal-backdrop" id="modal-reset-week">
+            <div class="modal">
+                <h3>⚠️ Zerar semana atual</h3>
+                <p>
+                    Isso vai <strong>apagar</strong> os registros de horas da semana
+                    <strong id="reset-week-label"></strong> para <strong>todos os membros ativos</strong>.
+                </p>
+                <p style="color:var(--danger); font-size:.85rem;">
+                    Os logs de ajuste manuais também serão apagados. Essa ação não pode ser desfeita.
+                </p>
+
+                <label class="field-label">Digite CONFIRMAR para prosseguir</label>
+                <input type="text" id="reset-confirm-input" placeholder="CONFIRMAR" autocomplete="off">
+
+                <div class="modal-actions">
+                    <button id="reset-cancel" class="ghost">Cancelar</button>
+                    <button id="reset-confirm" class="danger" disabled>Zerar tudo</button>
                 </div>
             </div>
         </div>

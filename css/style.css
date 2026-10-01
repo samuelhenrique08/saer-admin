@@ -111,21 +111,38 @@ h2 {
   font-weight: 600;
 }
 
+/* =========================================================
+   CARD HEAD (título + busca + botão zerar semana)
+   ========================================================= */
 .card-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
   margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 .card-head h2 {
   margin: 0;
 }
 
-.card-head input {
+.card-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+
+.card-head-actions input {
   flex: 1 1 auto;
   max-width: 320px;
+  margin: 0;
+}
+
+.card-head-actions button {
+  white-space: nowrap;
 }
 
 /* =========================================================
@@ -659,4 +676,71 @@ th {
 .modal ul#adj-history-list li .empty {
   color: var(--text-muted);
   font-style: italic;
+}
+
+/* =========================================================
+   ZERAR SEMANA (modal)
+   ========================================================= */
+#modal-reset-week .modal h3 {
+  color: var(--danger);
+}
+
+#modal-reset-week .modal p strong {
+  color: var(--gold);
+}
+
+#modal-reset-week input#reset-confirm-input {
+  font-family: monospace;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+}
+
+#modal-reset-week input#reset-confirm-input:focus {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 2px rgba(185, 58, 58, .15);
+}
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+@media (max-width: 700px) {
+  .card {
+    margin: 10px;
+    padding: 16px;
+  }
+
+  .card-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .card-head-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .card-head-actions input,
+  .card-head-actions button {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  header {
+    padding: 12px 14px;
+  }
+
+  header .brand-text h1 {
+    font-size: .85rem;
+  }
+
+  table {
+    font-size: .8rem;
+  }
+
+  th,
+  td {
+    padding: 8px 6px;
+  }
 }
