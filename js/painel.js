@@ -49,6 +49,12 @@ function metaFor(member) {
     return 0;
 }
 
+function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[c]);
+}
+
 // =========================================================
 // ESTADO / CARREGAR
 // =========================================================
@@ -80,7 +86,6 @@ function renderTable(filter = '') {
         !f || m.name.toLowerCase().includes(f) || String(m.id).includes(f)
     );
 
-    // Reaproveita DOM: renderiza via DocumentFragment
     const frag = document.createDocumentFragment();
 
     for (const m of list) {
@@ -103,19 +108,19 @@ function renderTable(filter = '') {
       <td>${escapeHtml(m.name)}</td>
       <td>${m.division.toUpperCase()}</td>
       <td>${m.role}</td>
-      <td>
-        <span class="strike-count">${m.strike_count}</span>
-      </td>
+      <td><span class="strike-count">${m.strike_count}</span></td>
       <td>${hours.toFixed(2)}h</td>
       <td>${isExempt ? '—' : meta.toFixed(2) + 'h'}</td>
       <td>${status}</td>
       <td>
         <div class="btn-row">
-            <button class="sm" data-action="strike-add" data-id="${m.id}" title="Adicionar strike">+1</button>
-            <button class="sm warn" data-action="strike-del" data-id="${m.id}" title="Remover último strike">−1</button>
-            <button class="sm ghost" data-action="strike-hist" data-id="${m.id}" title="Ver histórico">Ver</button>
-            <button class="sm ghost" data-action="edit" data-id="${m.id}" title="Editar membro">Editar</button>
-            <button class="sm danger" data-action="remove" data-id="${m.id}" title="Remover membro">X</button>
+          <button class="sm" data-action="strike-add" data-id="${m.id}" title="Adicionar strike">+1</button>
+          <button class="sm warn" data-action="strike-del" data-id="${m.id}" title="Remover último strike">−1</button>
+          <button class="sm ghost" data-action="strike-hist" data-id="${m.id}" title="Ver histórico de strikes">Strikes</button>
+          <button class="sm ghost" data-action="hours-add" data-id="${m.id}" title="Ajustar horas">±Horas</button>
+          <button class="sm ghost" data-action="hours-hist" data-id="${m.id}" title="Ver histórico de ajustes">📋</button>
+          <button class="sm ghost" data-action="edit" data-id="${m.id}" title="Editar membro">Editar</button>
+          <button class="sm danger" data-action="remove" data-id="${m.id}" title="Remover membro">X</button>
         </div>
       </td>
     `;
@@ -123,12 +128,6 @@ function renderTable(filter = '') {
     }
 
     tbody.replaceChildren(frag);
-}
-
-function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    })[c]);
 }
 
 // =========================================================
@@ -147,7 +146,6 @@ document.getElementById('form-member').addEventListener('submit', async (e) => {
         return;
     }
 
-    // Verifica se o ID já existe (ativo ou inativo)
     const { data: existing, error: eFind } = await supabase
         .from('members')
         .select('id, is_active, name')
@@ -162,19 +160,12 @@ document.getElementById('form-member').addEventListener('submit', async (e) => {
             return;
         }
 
-        // Reativa e atualiza dados — preserva histórico de strikes e metas
         const { error } = await supabase
             .from('members')
-            .update({
-                name,
-                division,
-                role,
-                is_active: true
-            })
+            .update({ name, division, role, is_active: true })
             .eq('id', id);
 
         if (error) { toast('Erro: ' + error.message, 'error'); return; }
-
         toast(`${name} reativado com sucesso`, 'success');
     } else {
         const { error } = await supabase
@@ -182,7 +173,6 @@ document.getElementById('form-member').addEventListener('submit', async (e) => {
             .insert({ id, name, division, role });
 
         if (error) { toast('Erro: ' + error.message, 'error'); return; }
-
         toast('Membro cadastrado', 'success');
     }
 
@@ -259,21 +249,29 @@ btnProcess.addEventListener('click', async () => {
 });
 
 // =========================================================
-// AÇÕES NA TABELA
+// MODAIS
 // =========================================================
 const modalStrike = document.getElementById('modal-strike');
 const modalHistory = document.getElementById('modal-history');
-let pendingStrikeId = null;
 const modalEdit = document.getElementById('modal-edit');
+const modalHours = document.getElementById('modal-hours');
+const modalAdjHistory = document.getElementById('modal-adjust-history');
+
+let pendingStrikeId = null;
 let pendingEditId = null;
+let pendingHoursId = null;
+let hoursMode = 'add';
 
 function openModal(el) { el.classList.add('open'); }
 function closeModal(el) { el.classList.remove('open'); }
 
-[modalStrike, modalHistory, modalEdit].forEach(m => {
-    m.addEventListener('click', (e) => { if (e.target === m) closeModal(m); });
+[modalStrike, modalHistory, modalEdit, modalHours, modalAdjHistory].forEach(m => {
+    if (m) m.addEventListener('click', (e) => { if (e.target === m) closeModal(m); });
 });
 
+// =========================================================
+// AÇÕES NA TABELA
+// =========================================================
 document.querySelector('#tbl-members').addEventListener('click', async (e) => {
     const btn = e.target.closest('button');
     if (!btn) return;
@@ -304,7 +302,6 @@ document.querySelector('#tbl-members').addEventListener('click', async (e) => {
         }
         const novo = member.strike_count - 1;
 
-        // Apaga o último strike registrado
         const { data: last } = await supabase
             .from('strikes').select('id')
             .eq('member_id', id)
@@ -318,7 +315,7 @@ document.querySelector('#tbl-members').addEventListener('click', async (e) => {
         await loadData();
     }
 
-    // ----- VER HISTÓRICO -----
+    // ----- VER HISTÓRICO DE STRIKES -----
     if (action === 'strike-hist') {
         const { data: list, error } = await supabase
             .from('strikes').select('*')
@@ -349,6 +346,55 @@ document.querySelector('#tbl-members').addEventListener('click', async (e) => {
         openModal(modalHistory);
     }
 
+    // ----- AJUSTAR HORAS -----
+    if (action === 'hours-add') {
+        pendingHoursId = id;
+        hoursMode = 'add';
+        document.getElementById('hours-member-name').textContent = `${member.name} (${id})`;
+        document.getElementById('hours-amount').value = '';
+        document.getElementById('hours-reason').value = '';
+        document.querySelectorAll('#hours-mode .toggle').forEach(t => {
+            t.classList.toggle('active', t.dataset.mode === 'add');
+        });
+        openModal(modalHours);
+        setTimeout(() => document.getElementById('hours-amount').focus(), 200);
+    }
+
+    // ----- HISTÓRICO DE AJUSTES -----
+    if (action === 'hours-hist') {
+        const { data: list, error } = await supabase
+            .from('hour_adjustments').select('*')
+            .eq('member_id', id)
+            .order('created_at', { ascending: false });
+
+        if (error) { toast('Erro: ' + error.message, 'error'); return; }
+
+        document.getElementById('adj-history-name').textContent = member.name;
+        const ul = document.getElementById('adj-history-list');
+        ul.replaceChildren();
+
+        if (!list || !list.length) {
+            const li = document.createElement('li');
+            li.innerHTML = '<span class="empty">Nenhum ajuste registrado.</span>';
+            ul.appendChild(li);
+        } else {
+            for (const a of list) {
+                const li = document.createElement('li');
+                const amt = Number(a.amount);
+                const isNeg = amt < 0;
+                li.className = isNeg ? 'negative' : '';
+                const date = new Date(a.created_at).toLocaleString('pt-BR');
+                const signal = isNeg ? '' : '+';
+                li.innerHTML = `
+          <span class="amount">${signal}${amt.toFixed(2)}h</span> — ${escapeHtml(a.reason || 'sem motivo')}
+          <span class="date">${date}</span>
+        `;
+                ul.appendChild(li);
+            }
+        }
+        openModal(modalAdjHistory);
+    }
+
     // ----- EDITAR MEMBRO -----
     if (action === 'edit') {
         pendingEditId = id;
@@ -370,7 +416,9 @@ document.querySelector('#tbl-members').addEventListener('click', async (e) => {
     }
 });
 
-// ----- CONFIRMAR STRIKE -----
+// =========================================================
+// CONFIRMAR STRIKE
+// =========================================================
 document.getElementById('strike-confirm').addEventListener('click', async () => {
     if (!pendingStrikeId) return;
     const member = membersCache.find(m => m.id === pendingStrikeId);
@@ -390,7 +438,9 @@ document.getElementById('strike-confirm').addEventListener('click', async () => 
     await loadData();
 });
 
-// ----- CONFIRMAR EDIÇÃO -----
+// =========================================================
+// CONFIRMAR EDIÇÃO
+// =========================================================
 document.getElementById('edit-confirm').addEventListener('click', async () => {
     if (!pendingEditId) return;
 
@@ -404,7 +454,6 @@ document.getElementById('edit-confirm').addEventListener('click', async () => {
         return;
     }
 
-    // 1) Atualiza os dados do membro
     const { error: eUpdate } = await supabase
         .from('members')
         .update({ name, division, role })
@@ -412,10 +461,8 @@ document.getElementById('edit-confirm').addEventListener('click', async () => {
 
     if (eUpdate) { toast('Erro: ' + eUpdate.message, 'error'); return; }
 
-    // 2) Recalcula a meta da semana atual (cargo/divisão podem ter mudado)
     const rec = getRecord(member.id);
     if (rec) {
-        // Simula o novo membro para calcular a nova meta
         const updated = { ...member, name, division, role };
         const newMeta = metaFor(updated);
         const isExempt = ['comandante', 'administrador'].includes(role);
@@ -439,15 +486,104 @@ document.getElementById('edit-confirm').addEventListener('click', async () => {
     await loadData();
 });
 
+// =========================================================
+// AJUSTE DE HORAS — listeners do modal
+// =========================================================
+document.querySelectorAll('#hours-mode .toggle').forEach(t => {
+    t.addEventListener('click', () => {
+        hoursMode = t.dataset.mode;
+        document.querySelectorAll('#hours-mode .toggle').forEach(x => {
+            x.classList.toggle('active', x === t);
+        });
+    });
+});
+
+document.getElementById('hours-confirm').addEventListener('click', async () => {
+    if (!pendingHoursId) return;
+
+    const member = membersCache.find(m => m.id === pendingHoursId);
+    const amountRaw = parseFloat(document.getElementById('hours-amount').value);
+    const reason = document.getElementById('hours-reason').value.trim();
+
+    if (!amountRaw || amountRaw <= 0) {
+        toast('Informe uma quantidade válida de horas', 'error');
+        return;
+    }
+    if (!reason) {
+        toast('Informe o motivo do ajuste', 'error');
+        return;
+    }
+
+    const signedAmount = hoursMode === 'add' ? amountRaw : -amountRaw;
+
+    const rec = getRecord(member.id);
+    const currentHours = rec ? Number(rec.hours_logged) : 0;
+    const newHours = currentHours + signedAmount;
+
+    if (newHours < 0) {
+        toast('Operação resultaria em horas negativas', 'error');
+        return;
+    }
+
+    const meta = metaFor(member);
+    const isExempt = ['comandante', 'administrador'].includes(member.role);
+    const passed = isExempt ? true : newHours >= meta;
+
+    const payload = {
+        member_id: member.id,
+        week_start: weekStart,
+        hours_logged: Number(newHours.toFixed(4)),
+        meta_hours: meta,
+        passed,
+        updated_at: new Date().toISOString()
+    };
+
+    const { error: e1 } = await supabase
+        .from('weekly_records')
+        .upsert(payload, { onConflict: 'member_id,week_start' });
+    if (e1) { toast('Erro: ' + e1.message, 'error'); return; }
+
+    const { error: e2 } = await supabase
+        .from('hour_adjustments')
+        .insert({
+            member_id: member.id,
+            week_start: weekStart,
+            amount: signedAmount,
+            reason
+        });
+    if (e2) { toast('Erro ao registrar log: ' + e2.message, 'error'); return; }
+
+    closeModal(modalHours);
+    toast(
+        `${hoursMode === 'add' ? 'Adicionado' : 'Removido'} ${amountRaw.toFixed(2)}h ${hoursMode === 'add' ? 'para' : 'de'
+        } ${member.name}`,
+        'success'
+    );
+
+    pendingHoursId = null;
+    await loadData();
+});
+
+// =========================================================
+// CANCELAR / FECHAR MODAIS
+// =========================================================
+document.getElementById('strike-cancel').addEventListener('click', () => {
+    closeModal(modalStrike); pendingStrikeId = null;
+});
+document.getElementById('history-close').addEventListener('click', () =>
+    closeModal(modalHistory)
+);
 document.getElementById('edit-cancel').addEventListener('click', () => {
     closeModal(modalEdit);
     pendingEditId = null;
 });
-
-document.getElementById('strike-cancel').addEventListener('click', () => {
-    closeModal(modalStrike); pendingStrikeId = null;
+document.getElementById('hours-cancel').addEventListener('click', () => {
+    closeModal(modalHours);
+    pendingHoursId = null;
 });
-document.getElementById('history-close').addEventListener('click', () => closeModal(modalHistory));
+document.getElementById('adj-history-close').addEventListener('click', () =>
+    closeModal(modalAdjHistory)
+);
 
 // ESC fecha modais
 document.addEventListener('keydown', (e) => {
@@ -455,11 +591,13 @@ document.addEventListener('keydown', (e) => {
         closeModal(modalStrike);
         closeModal(modalHistory);
         closeModal(modalEdit);
+        closeModal(modalHours);
+        closeModal(modalAdjHistory);
     }
 });
 
 // =========================================================
-// BUSCA (debounce para fluidez)
+// BUSCA (debounce)
 // =========================================================
 let searchTimer;
 document.getElementById('search').addEventListener('input', (e) => {

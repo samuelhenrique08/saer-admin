@@ -130,6 +130,43 @@
             </div>
         </div>
 
+        <!-- MODAL: ajustar horas -->
+        <div class="modal-backdrop" id="modal-hours">
+            <div class="modal">
+                <h3>Ajustar horas</h3>
+                <p id="hours-member-name"></p>
+
+                <label class="field-label">Operação</label>
+                <div class="toggle-group" id="hours-mode">
+                    <button type="button" class="toggle active" data-mode="add">+ Adicionar</button>
+                    <button type="button" class="toggle" data-mode="remove">− Remover</button>
+                </div>
+
+                <label class="field-label">Horas (ex: 1.5 = 1h30min)</label>
+                <input type="number" id="hours-amount" step="0.01" min="0.01" placeholder="0.00">
+
+                <label class="field-label">Motivo</label>
+                <textarea id="hours-reason" rows="2"
+                    placeholder="Ex: correção de prompt, atividade extra..."></textarea>
+
+                <div class="modal-actions">
+                    <button id="hours-cancel" class="ghost">Cancelar</button>
+                    <button id="hours-confirm">Aplicar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL: histórico de ajustes -->
+        <div class="modal-backdrop" id="modal-adjust-history">
+            <div class="modal">
+                <h3>Ajustes de <span id="adj-history-name"></span></h3>
+                <ul id="adj-history-list"></ul>
+                <div class="modal-actions">
+                    <button id="adj-history-close" class="ghost">Fechar</button>
+                </div>
+            </div>
+        </div>
+
         <!-- TOASTS -->
         <div id="toasts"></div>
     </main>
