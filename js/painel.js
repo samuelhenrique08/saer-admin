@@ -31,14 +31,24 @@ function getWeekStart(date = new Date()) {
     return d.toISOString().slice(0, 10);
 }
 
-const PROMPT_REGEX = /\|\s*(\d+)\s*\|.*?—\s*(\d+)\s*h\s*:\s*(\d+)\s*min\s*:\s*(\d+)\s*s/i;
+// Regex robusta: captura nome, id (opcional), horas/min/seg
+// Exemplos aceitos:
+//   @[INV 2ª] Panda | 2111 | 998... — 22h:51min:26s
+//   @[INV OP CORE] Klaus | 🦅 | 133... — 2h:25min:33s
+//   @[CMSP CORE] Rocha | 🦅 | 151... — 3h:57min:0s
+const PROMPT_REGEX =
+    /@\[[^\]]+\]\s+([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*[^—]+?—\s*(\d+)\s*h\s*:\s*(\d+)\s*min\s*:\s*(\d+)\s*s/i;
 
 function parsePromptLine(line) {
     const m = line.match(PROMPT_REGEX);
     if (!m) return null;
-    const id = Number(m[1]);
-    const hours = Number(m[2]) + Number(m[3]) / 60 + Number(m[4]) / 3600;
-    return { id, hours };
+
+    const name = m[1].trim();                 // "Panda", "Klaus", "Husupreme"
+    const rawId = m[2].trim();                // "2111" ou "🦅"
+    const id = /^\d+$/.test(rawId) ? Number(rawId) : null; // só número
+    const hours = Number(m[3]) + Number(m[4]) / 60 + Number(m[5]) / 3600;
+
+    return { name, id, hours };
 }
 
 function metaFor(member) {
@@ -202,33 +212,63 @@ btnProcess.addEventListener('click', async () => {
     btnProcess.textContent = 'Processando...';
 
     try {
+        // totals: { id: { hours, name } } — sempre usa o ID final (numérico do jogo)
         const totals = {};
         let parseErrors = 0;
+        const notFound = [];
+
         for (const line of lines) {
             const parsed = parsePromptLine(line);
             if (!parsed) { parseErrors++; continue; }
-            totals[parsed.id] = (totals[parsed.id] || 0) + parsed.hours;
+
+            // 1) Tenta localizar pelo ID numérico do jogo
+            let member = null;
+            if (parsed.id !== null) {
+                member = membersCache.find(m => m.id === parsed.id);
+            }
+
+            // 2) Fallback: busca pelo nome (case-insensitive, trim)
+            if (!member && parsed.name) {
+                const norm = parsed.name.toLowerCase().trim();
+                member = membersCache.find(m =>
+                    m.name.toLowerCase().trim() === norm
+                );
+            }
+
+            if (!member) {
+                notFound.push(parsed.name || parsed.id);
+                continue;
+            }
+
+            // Acumula horas
+            if (!totals[member.id]) totals[member.id] = { hours: 0, name: member.name };
+            totals[member.id].hours += parsed.hours;
         }
 
         const exemptRoles = ['comandante', 'administrador'];
+
+        // Zera quem não apareceu no prompt
         for (const m of membersCache) {
-            if (!exemptRoles.includes(m.role) && !(m.id in totals)) totals[m.id] = 0;
+            if (!exemptRoles.includes(m.role) && !(m.id in totals)) {
+                totals[m.id] = { hours: 0, name: m.name };
+            }
         }
 
         const upserts = [];
-        const unknownIds = [];
-        for (const [idStr, hours] of Object.entries(totals)) {
+        for (const [idStr, data] of Object.entries(totals)) {
             const id = Number(idStr);
             const member = membersCache.find(m => m.id === id);
-            if (!member) { unknownIds.push(id); continue; }
+            if (!member) continue;
+
             const meta = metaFor(member);
             const isExempt = meta === 0 && exemptRoles.includes(member.role);
+
             upserts.push({
                 member_id: id,
                 week_start: weekStart,
-                hours_logged: Number(hours.toFixed(4)),
+                hours_logged: Number(data.hours.toFixed(4)),
                 meta_hours: meta,
-                passed: isExempt ? true : hours >= meta,
+                passed: isExempt ? true : data.hours >= meta,
                 updated_at: new Date().toISOString()
             });
         }
@@ -243,7 +283,7 @@ btnProcess.addEventListener('click', async () => {
         msg.textContent =
             `${upserts.length} membros atualizados` +
             (parseErrors ? ` • ${parseErrors} linha(s) inválida(s)` : '') +
-            (unknownIds.length ? ` • IDs não cadastrados: ${unknownIds.join(', ')}` : '');
+            (notFound.length ? ` • Não encontrados: ${notFound.join(', ')}` : '');
         toast('Prompt processado', 'success');
 
         document.getElementById('prompt-input').value = '';
