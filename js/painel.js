@@ -156,11 +156,12 @@ document.getElementById('form-member').addEventListener('submit', async (e) => {
 
     const id = Number(document.getElementById('m-id').value);
     const name = document.getElementById('m-name').value.trim();
+    const discord_id = document.getElementById('m-discord').value.trim() || null;
     const division = document.getElementById('m-division').value;
     const role = document.getElementById('m-role').value;
 
     if (!id || !name || !division || !role) {
-        toast('Preencha todos os campos', 'error');
+        toast('Preencha todos os campos obrigatórios', 'error');
         return;
     }
 
@@ -180,7 +181,7 @@ document.getElementById('form-member').addEventListener('submit', async (e) => {
 
         const { error } = await supabase
             .from('members')
-            .update({ name, division, role, is_active: true })
+            .update({ name, division, role, discord_id, is_active: true })
             .eq('id', id);
 
         if (error) { toast('Erro: ' + error.message, 'error'); return; }
@@ -188,7 +189,7 @@ document.getElementById('form-member').addEventListener('submit', async (e) => {
     } else {
         const { error } = await supabase
             .from('members')
-            .insert({ id, name, division, role });
+            .insert({ id, name, division, role, discord_id });
 
         if (error) { toast('Erro: ' + error.message, 'error'); return; }
         toast('Membro cadastrado', 'success');
@@ -449,6 +450,7 @@ document.querySelector('#tbl-members').addEventListener('click', async (e) => {
         pendingEditId = id;
         document.getElementById('edit-member-id').textContent = `ID: ${member.id}`;
         document.getElementById('edit-name').value = member.name;
+        document.getElementById('edit-discord').value = member.discord_id || ''; // ← NOVO
         document.getElementById('edit-division').value = member.division;
         document.getElementById('edit-role').value = member.role;
         openModal(modalEdit);
@@ -495,17 +497,18 @@ document.getElementById('edit-confirm').addEventListener('click', async () => {
 
     const member = membersCache.find(m => m.id === pendingEditId);
     const name = document.getElementById('edit-name').value.trim();
+    const discord_id = document.getElementById('edit-discord').value.trim() || null;
     const division = document.getElementById('edit-division').value;
     const role = document.getElementById('edit-role').value;
 
     if (!name || !division || !role) {
-        toast('Preencha todos os campos', 'error');
+        toast('Preencha todos os campos obrigatórios', 'error');
         return;
     }
 
     const { error: eUpdate } = await supabase
         .from('members')
-        .update({ name, division, role })
+        .update({ name, division, role, discord_id })
         .eq('id', member.id);
 
     if (eUpdate) { toast('Erro: ' + eUpdate.message, 'error'); return; }
