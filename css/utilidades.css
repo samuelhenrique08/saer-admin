@@ -1,0 +1,658 @@
+/* =========================================================
+   UTILIDADES - CONTEÚDO, ABAS, FUNÇÕES E TUTORIAIS
+   ========================================================= */
+
+/* --- ABAS PRINCIPAIS --- */
+.tabs-container {
+    width: 100%;
+}
+
+.tabs-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--borda, #222);
+    padding-bottom: 15px;
+    overflow-x: auto;
+}
+
+.tab-btn {
+    background: transparent;
+    border: 1px solid var(--borda, #222);
+    color: var(--texto-muted, #a0a0a0);
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    border-color: var(--dourado);
+    color: var(--dourado);
+}
+
+.tab-btn.active {
+    background: rgba(201, 169, 97, 0.1);
+    border-color: var(--dourado);
+    color: var(--dourado);
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- CARDS SIMPLES (Regras/Fardamentos) --- */
+.utility-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.utility-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background: var(--preto-card, #0a0a0a);
+    border: 1px solid var(--borda, #222);
+    border-radius: 8px;
+    padding: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.utility-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--dourado);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.utility-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--dourado);
+    box-shadow: 0 8px 25px rgba(201, 169, 97, 0.1);
+}
+
+.utility-card:hover::before {
+    opacity: 1;
+}
+
+.utility-icon {
+    background: rgba(201, 169, 97, 0.1);
+    border: 1px solid rgba(201, 169, 97, 0.2);
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.utility-icon i {
+    color: var(--dourado);
+    font-size: 1.4rem;
+}
+
+.utility-card:hover .utility-icon {
+    background: var(--dourado);
+}
+
+.utility-card:hover .utility-icon i {
+    color: #000;
+}
+
+.utility-info h3 {
+    color: var(--texto, #fff);
+    font-size: 1.05rem;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+}
+
+.utility-info p {
+    color: var(--texto-muted, #a0a0a0);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* --- SUB-ABAS (Funções e Tutoriais) --- */
+.sub-tabs-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.sub-tab-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--texto, #fff);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.sub-tab-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.sub-tab-btn.active {
+    border-color: var(--dourado);
+    background: rgba(201, 169, 97, 0.1);
+    color: var(--dourado);
+    box-shadow: 0 0 15px rgba(201, 169, 97, 0.1);
+}
+
+.sub-tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.sub-tab-content.active {
+    display: block;
+}
+
+/* --- FUNÇÕES (Card Grande) --- */
+.funcao-card {
+    background: #0d0d0d;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.funcao-title {
+    color: var(--dourado);
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+}
+
+.funcao-desc-title {
+    color: #d1b87f;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.funcao-desc {
+    color: var(--texto, #fff);
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.funcao-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.funcao-box {
+    background: #151515;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 20px;
+    transition: border-color 0.3s ease;
+}
+
+.funcao-box:hover {
+    border-color: rgba(201, 169, 97, 0.3);
+}
+
+.funcao-box h5 {
+    color: var(--dourado);
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    text-transform: uppercase;
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 8px;
+}
+
+.funcao-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.funcao-box ul li {
+    color: #b0b0b0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 15px;
+}
+
+.funcao-box ul li::before {
+    content: '•';
+    color: var(--dourado);
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 1rem;
+}
+
+/* =========================================================
+   TUTORIAIS (Visuais das Imagens)
+   ========================================================= */
+
+/* Card Principal do Tutorial */
+.tutorial-card {
+    background: #0d0d0d;
+    border: 1px solid var(--borda, #222);
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.tutorial-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.tutorial-icon {
+    font-size: 2.5rem;
+    color: var(--dourado);
+    margin-bottom: 10px;
+}
+
+.tutorial-header h2 {
+    color: var(--dourado);
+    font-size: 1.8rem;
+    margin: 0 0 5px 0;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+.tutorial-header p {
+    color: var(--texto-muted);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Vídeo Simulado */
+.video-container {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 8px;
+    border: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.video-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #888;
+    gap: 10px;
+    transition: color 0.3s;
+}
+
+.video-container:hover .video-placeholder {
+    color: var(--dourado);
+}
+
+.play-icon {
+    font-size: 4rem;
+    color: #ff0000;
+    filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
+    transition: transform 0.3s;
+}
+
+.video-container:hover .play-icon {
+    transform: scale(1.1);
+}
+
+/* Caixas de Informação (Avisos, Dicas) */
+.info-box {
+    background: rgba(201, 169, 97, 0.05);
+    border-left: 3px solid var(--dourado);
+    padding: 15px 20px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.info-box p {
+    color: var(--texto, #fff);
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.warning-box {
+    background: rgba(217, 83, 79, 0.05);
+    border-left-color: #d9534f;
+}
+
+/* Grid de 2 Colunas (Dicas e Avisos) */
+.tutorial-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.info-panel {
+    background: #0d0d0d;
+    border: 1px solid var(--borda, #222);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.info-panel h3 {
+    color: var(--dourado);
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #222;
+    padding-bottom: 10px;
+}
+
+.info-panel.small h4 {
+    color: var(--dourado);
+    font-size: 0.9rem;
+    margin: 0 0 10px 0;
+}
+
+.info-panel.small p {
+    color: var(--texto-muted);
+    font-size: 0.85rem;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Listas com Check */
+.check-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.check-list li {
+    color: #b0b0b0;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.4;
+}
+
+.check-list li i {
+    color: var(--dourado);
+    margin-top: 3px;
+}
+
+/* Grid de 3 Colunas (Protocolo) */
+.tutorial-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Tabela de Teclas (Configurações) */
+.keybinds-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.keybind-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #151515;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    padding: 12px 20px;
+    transition: border-color 0.3s;
+}
+
+.keybind-row:hover {
+    border-color: var(--dourado);
+}
+
+.keybind-row .key {
+    color: var(--dourado);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.keybind-row .action {
+    color: var(--texto, #fff);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.keybind-row i {
+    color: #555;
+}
+
+/* Placeholder do Manual (Aquele desenho do relógio) */
+.manual-image-placeholder {
+    width: 100%;
+    max-width: 300px;
+    background: #fff;
+    color: #000;
+    padding: 20px;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.manual-image-placeholder h4 {
+    font-size: 0.7rem;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.manual-image-placeholder h2 {
+    font-size: 2rem;
+    margin: 5px 0;
+    font-weight: 900;
+}
+
+.manual-image-placeholder p {
+    font-size: 0.6rem;
+    margin: 0 0 20px 0;
+    font-weight: 700;
+}
+
+.clock-diagram {
+    width: 150px;
+    height: 150px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, #eee 0%, #fff 70%);
+}
+
+.clock-diagram::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 80px;
+    background: #000;
+}
+
+.clock-diagram::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 2px;
+    background: #000;
+}
+
+.clock-center {
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: #000;
+    z-index: 2;
+    background: #fff;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+@media (max-width: 900px) {
+    .funcao-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tutorial-grid-3 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .tabs-nav {
+        gap: 8px;
+    }
+
+    .tab-btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .funcao-card,
+    .tutorial-card {
+        padding: 25px 15px;
+    }
+
+    .tutorial-grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .funcao-grid,
+    .tutorial-grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .sub-tabs-nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 10px;
+    }
+
+    .sub-tab-btn {
+        white-space: nowrap;
+    }
+
+    .utility-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .utility-icon {
+        margin-bottom: 10px;
+    }
+
+    .keybind-row {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+
+    .keybind-row i {
+        transform: rotate(90deg);
+        margin: 5px 0;
+    }
+}
+
+/* Ajuste para o Player do YouTube */
+.video-container iframe,
+.tutorial-card iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    /* Mantém a proporção de vídeo widescreen */
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
