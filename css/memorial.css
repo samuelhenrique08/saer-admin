@@ -1,0 +1,270 @@
+/* =========================================================
+   MEMORIAL - LINHA DO TEMPO
+   ========================================================= */
+
+/* Container da Timeline */
+.timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px 0;
+}
+
+/* Linha vertical central */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50px;
+    /* Posição da linha à esquerda */
+    width: 2px;
+    background: linear-gradient(to bottom, var(--dourado), #333);
+    border-radius: 2px;
+}
+
+/* Grupo de cada Gestão */
+.timeline-group {
+    position: relative;
+    margin-bottom: 50px;
+    padding-left: 120px;
+    /* Espaço para o marcador */
+}
+
+/* Marcador com a Letra Grega */
+.timeline-marker {
+    position: absolute;
+    left: 15px;
+    /* Centraliza o marcador na linha */
+    top: 0;
+    width: 70px;
+    height: 70px;
+    background: var(--preto-card, #0a0a0a);
+    border: 2px solid var(--dourado);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(201, 169, 97, 0.2);
+    z-index: 2;
+}
+
+.greek-letter {
+    font-size: 2rem;
+    color: var(--dourado);
+    font-weight: 900;
+    font-family: 'Times New Roman', serif;
+    /* Letras gregas ficam bonitas em serif */
+}
+
+/* Título da Gestão */
+.gestao-title {
+    color: var(--dourado);
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 15px 0 20px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--borda, #222);
+    padding-bottom: 10px;
+}
+
+/* Grid dos Membros da Gestão */
+.gestao-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+/* Card Individual do Membro */
+.membro-card {
+    background: var(--preto-card, #0a0a0a);
+    border: 1px solid var(--borda, #222);
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.membro-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--dourado);
+}
+
+/* Etiqueta do Período (ex: α.1) */
+.cargo-label {
+    position: absolute;
+    top: -10px;
+    right: 15px;
+    background: var(--dourado);
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Textos Internos do Card */
+.membro-card h4 {
+    color: var(--texto-muted, #a0a0a0);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 10px 0 5px 0;
+}
+
+.membro-card p {
+    color: var(--texto, #fff);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+}
+
+/* Ajuste para o primeiro h4 do card não ter muito espaço em cima */
+.membro-card h4:first-of-type {
+    margin-top: 5px;
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+   ========================================================= */
+@media (max-width: 768px) {
+
+    /* No celular, a linha vai para a esquerda e os cards ficam empilhados */
+    .timeline::before {
+        left: 30px;
+    }
+
+    .timeline-group {
+        padding-left: 80px;
+    }
+
+    .timeline-marker {
+        left: 0;
+        width: 55px;
+        height: 55px;
+    }
+
+    .greek-letter {
+        font-size: 1.5rem;
+    }
+
+    .gestao-title {
+        font-size: 1.2rem;
+    }
+
+    .gestao-grid {
+        grid-template-columns: 1fr;
+        /* Uma coluna só no celular */
+    }
+}
+
+/* =========================================================
+   MENSAGEM FINAL DO MEMORIAL
+   ========================================================= */
+.memorial-mensagem {
+    position: relative;
+    margin: 60px auto 20px auto;
+    max-width: 800px;
+    background: linear-gradient(180deg, #151310 0%, #0f0e0b 100%);
+    border: 1px solid var(--dourado, #c9a961);
+    border-radius: 12px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(201, 169, 97, 0.15);
+    z-index: 2;
+}
+
+/* Efeito de brilho no topo da caixa */
+.memorial-mensagem::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--dourado, #c9a961), transparent);
+    border-radius: 12px 12px 0 0;
+}
+
+.trophy-icon {
+    font-size: 2.5rem;
+    color: var(--dourado, #c9a961);
+    margin-bottom: 20px;
+    display: block;
+    text-shadow: 0 0 15px rgba(201, 169, 97, 0.5);
+}
+
+.memorial-mensagem p {
+    color: var(--texto, #fff);
+    font-size: 1.25rem;
+    line-height: 1.6;
+    font-style: italic;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* Ajuste para o celular */
+@media (max-width: 768px) {
+    .memorial-mensagem {
+        margin-left: 80px;
+        /* Respeita o recuo da linha do tempo */
+        padding: 30px 20px;
+    }
+
+    .memorial-mensagem p {
+        font-size: 1.1rem;
+    }
+}
+
+/* =========================================================
+   MENSAGEM DE ABERTURA DO MEMORIAL (Intro)
+   ========================================================= */
+.memorial-intro {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto 60px auto;
+    /* Centralizado e com margem para a timeline abaixo */
+    background: rgba(201, 169, 97, 0.03);
+    /* Fundo dourado bem sutil */
+    border: 1px solid var(--borda, #222);
+    border-left: 4px solid var(--dourado, #c9a961);
+    /* Destaque na lateral esquerda */
+    border-radius: 8px;
+    padding: 30px 40px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.intro-icon {
+    font-size: 2.2rem;
+    color: var(--dourado, #c9a961);
+    margin-bottom: 15px;
+    display: block;
+    opacity: 0.8;
+}
+
+.memorial-intro p {
+    color: #d1d1d1;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Ajuste para o celular */
+@media (max-width: 768px) {
+    .memorial-intro {
+        padding: 25px 20px;
+        margin-bottom: 40px;
+        border-left: none;
+        border-top: 4px solid var(--dourado, #c9a961);
+        /* No celular, o destaque vai para cima */
+    }
+
+    .memorial-intro p {
+        font-size: 0.95rem;
+    }
+}
