@@ -645,14 +645,23 @@
     }
 }
 
-/* Ajuste para o Player do YouTube */
-.video-container iframe,
-.tutorial-card iframe {
+
+
+/* Container do Vídeo */
+.video-container {
+    width: 100%;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    overflow: hidden;
+    /* Corta as bordas do iframe */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    border: 1px solid #222;
+}
+
+.video-container iframe {
     width: 100%;
     aspect-ratio: 16 / 9;
-    /* Mantém a proporção de vídeo widescreen */
-    border-radius: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #333;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    display: block;
+    /* Remove o espaço extra embaixo do iframe */
+    border: none;
 }
