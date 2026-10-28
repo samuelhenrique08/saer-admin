@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria — SAER</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Apenas o CSS do site -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="site-body">
+
+    <!-- HEADER PADRÃO -->
+    <header>
+        <div class="header-container">
+            <!-- Logo -->
+            <a href="home.html" class="logo">
+                <img src="img/saer-logo.png" alt="Logo SAER">
+                <span>SAER — RJ</span>
+            </a>
+
+            <!-- Menu de Navegação -->
+            <nav id="main-nav">
+                <ul>
+                    <!-- Como tudo está na raiz, os links são diretos -->
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="helicopteros.html">Helicópteros</a></li>
+                    <li><a href="galeria.html" class="active">Galeria</a></li>
+                    <li><a href="utilidades.html">Utilidades</a></li>
+                    <li><a href="memorial.html">Memorial</a></li>
+                    <li><a href="transparencia.html">Transparência</a></li>
+                </ul>
+                <!-- Botão Área Restrita -->
+                <div class="nav-actions">
+                    <a href="index.html" class="btn-login">
+                        <i class="fas fa-lock"></i> Área Restrita
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Botão Hamburger -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO DA GALERIA -->
+    <main class="page-container">
+
+        <div class="page-header">
+            <h1 class="page-title">Galeria de Operações</h1>
+            <p class="page-subtitle">Registros visuais das aeronaves, treinamentos e ações do SAER.</p>
+        </div>
+
+        <div class="gallery-grid">
+            <!-- FOTO 1 -->
+            <div class="gallery-item" onclick="abrirLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1599578622102-59c62f4b7d25?q=80&w=800&auto=format&fit=crop"
+                    alt="Helicóptero em voo">
+                <div class="gallery-overlay">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </div>
+            </div>
+
+            <!-- FOTO 2 -->
+            <div class="gallery-item" onclick="abrirLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1533240332313-0db49b459ad6?q=80&w=800&auto=format&fit=crop"
+                    alt="Equipe tática">
+                <div class="gallery-overlay">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </div>
+            </div>
+
+            <!-- FOTO 3 -->
+            <div class="gallery-item" onclick="abrirLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1583506636520-7a39cbdb50c7?q=80&w=800&auto=format&fit=crop"
+                    alt="Sobrevoando a cidade">
+                <div class="gallery-overlay">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </div>
+            </div>
+
+            <!-- FOTO 4 -->
+            <div class="gallery-item" onclick="abrirLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1541888078693-01865a69f943?q=80&w=800&auto=format&fit=crop"
+                    alt="Aeronave no pátio">
+                <div class="gallery-overlay">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </div>
+            </div>
+
+            <!-- FOTO 5 -->
+            <div class="gallery-item" onclick="abrirLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1508669232494-291f961df3d7?q=80&w=800&auto=format&fit=crop"
+                    alt="Policial em operação">
+                <div class="gallery-overlay">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </div>
+            </div>
+
+            <!-- FOTO 6 -->
+            <div class="gallery-item" onclick="abrirLightbox(this)">
+                <img src="https://images.unsplash.com/photo-1618090584176-7132b9911657?q=80&w=800&auto=format&fit=crop"
+                    alt="Voo noturno">
+                <div class="gallery-overlay">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- LIGHTBOX (Tela cheia da imagem) -->
+    <div id="lightbox" class="lightbox" onclick="fecharLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <p>&copy; 2026 SAER — Serviço Aeropolicial | Polícia Civil RJ / CORE</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Menu Mobile
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.querySelector('nav');
+        if (menuToggle && navMenu) {
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('open');
+                const icon = menuToggle.querySelector('i');
+                if (navMenu.classList.contains('open')) {
+                    icon.classList.replace('fa-bars', 'fa-xmark');
+                } else {
+                    icon.classList.replace('fa-xmark', 'fa-bars');
+                }
+            });
+        }
+
+        // Lógica do Lightbox (Ampliar Imagem)
+        function abrirLightbox(element) {
+            const imgSrc = element.querySelector('img').src;
+            document.getElementById('lightbox-img').src = imgSrc;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        function fecharLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

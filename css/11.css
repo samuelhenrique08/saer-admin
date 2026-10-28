@@ -1,0 +1,220 @@
+/* =========================================
+   RESET E VARIÁVEIS GERAIS
+========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+  --bg-color: #030303;
+  --text-color: #ffffff;
+  --gold-color: #c2a366;
+  --gold-hover: #e0c28a;
+  --red-button: #c94b4b;
+  --red-hover: #b33c3c;
+  --border-gray: #333;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  overflow-x: hidden;
+  /* Evita barra de rolagem horizontal por causa da imagem gigante */
+}
+
+/* =========================================
+   NAVBAR
+========================================= */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--gold-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Estilo para a sua imagem real de logo */
+.logo-img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
+
+.nav-logo-text {
+  color: var(--gold-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+}
+
+.nav-links li a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links li a:hover {
+  color: var(--gold-color);
+}
+
+/* Adicionado para destacar a página atual na navbar */
+.nav-links li a.active {
+  color: var(--gold-color);
+  font-weight: 600;
+  border-bottom: 2px solid var(--gold-color);
+  padding-bottom: 4px;
+}
+
+.btn-restrito {
+  background-color: var(--red-button);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s;
+}
+
+.btn-restrito:hover {
+  background-color: var(--red-hover);
+}
+
+/* =========================================
+   SEÇÃO HERO (HOME)
+========================================= */
+.hero-section {
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  padding: 0 10%;
+  position: relative;
+
+  /* CORRIGIDO: Caminho relativo para a pasta img dentro de site-saer */
+  background-image: url('../img/bgSAER2.png');
+  background-repeat: no-repeat;
+
+  /* Posiciona a imagem no lado direito e no centro vertical */
+  background-position: right 5% center;
+
+  /* Ajusta o tamanho da imagem. 'contain' garante que o brasão não seja cortado */
+  background-size: contain;
+}
+
+/* Cria uma camada escura (fumê) sobre a imagem para o texto ficar legível,
+   igual ao efeito da sua imagem de referência */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(3, 3, 3, 1) 30%, rgba(3, 3, 3, 0.4) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  max-width: 500px;
+  z-index: 2;
+  /* Garante que o texto fique acima da camada escura */
+  position: relative;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--gold-color);
+  line-height: 1;
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: var(--gold-color);
+  font-style: italic;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.hero-quote {
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.hero-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #cccccc;
+  margin-bottom: 40px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--gold-color);
+  color: var(--gold-color);
+  padding: 12px 24px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.btn-outline:hover {
+  background: var(--gold-color);
+  color: black;
+}
+
+.btn-outline-dark {
+  background: transparent;
+  border: 1px solid var(--border-gray);
+  color: var(--text-color);
+  padding: 12px 24px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+
+.btn-outline-dark:hover {
+  border-color: var(--text-color);
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAER - Serviço Aeropolicial</title>
+
+    <!-- Fonte Inter (necessária para o CSS novo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Ícones (Opcional, caso use FontAwesome no futuro) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="../img/favicon.png">
+</head>
+
+<!-- ATENÇÃO: A classe "site-body" é obrigatória para o fundo e layout funcionarem -->
+<body class="site-body">
+
+    <!-- HEADER PADRONIZADO (Estrutura exigida pelo novo CSS) -->
+    <header>
+        <div class="header-container">
+            <!-- Logo -->
+            <a href="home.html" class="logo">
+                <img src="img/favicon.png" alt="Logo SAER">
+                <span>SAER — RJ</span>
+            </a>
+
+            <!-- Menu de Navegação -->
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="home.html" class="active">Home</a></li>
+                    <li><a href="helicopteros.html">Helicópteros</a></li>
+                    <li><a href="galeria.html">Galeria</a></li>
+                    <li><a href="utlidades.html">Utilidades</a></li>
+                    <li><a href="memorial.html">Memorial</a></li>
+                    <li><a href="transparencia.html">Transparência</a></li>
+                </ul>
+                <!-- Botão Área Restrita dentro do nav para mobile -->
+                <div class="nav-actions">
+                    <a href="index.html" class="btn-login">
+                        <i class="fas fa-lock"></i> Área Restrita
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Botão Hamburger (Só aparece no mobile) -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO DA HOME (HERO) -->
+    <main class="hero-container">
+        <div class="hero-text">
+            <h1 class="hero-title">SAER</h1>
+            <h2 class="hero-subtitle">Serviço Aeropolicial</h2>
+            <p class="hero-quote">"Voamos para lutar e salvar!"</p>
+            <p class="hero-description">
+                O SAER da PCERJ é o Serviço Aeropolicial, a unidade aérea da Polícia Civil do Estado do Rio de Janeiro.
+                Opera helicópteros utilizados em missões policiais, apoio a operações, transporte de equipes especiais,
+                resgates e observação aérea.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#" class="btn-outline">NOSSAS AERONAVES</a>
+                <a href="#" class="btn-outline">NOSSAS FUNÇÕES</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Script simples para o menu mobile funcionar -->
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>

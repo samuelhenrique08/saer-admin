@@ -6,26 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SAER — Portal da Transparência</title>
     <link rel="icon" type="image/png" href="img/favicon.png">
+
+    <!-- Fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Ícones FontAwesome (Para o menu mobile e cadeado) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS Global -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- CSS Específico da Transparência -->
     <link rel="stylesheet" href="css/transparencia.css">
 </head>
 
-<body>
+<body class="site-body">
 
+    <!-- NAVBAR PADRONIZADA -->
     <header>
-        <div class="brand">
-            <img src="img/saer-logo.png" alt="SAER">
-            <div class="brand-text">
-                <h1>SAER</h1>
-                <span>Portal da Transparência</span>
-            </div>
+        <div class="header-container">
+            <!-- Logo -->
+            <a href="home.html" class="logo">
+                <img src="img/favicon.png" alt="Logo SAER">
+                <span>SAER — RJ</span>
+            </a>
+
+            <!-- Menu de Navegação -->
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="helicopteros.html">Helicópteros</a></li>
+                    <li><a href="galeria.html">Galeria</a></li>
+                    <li><a href="utlidades.html">Utilidades</a></li>
+                    <li><a href="memorial.html">Memorial</a></li>
+                    <li><a href="transparencia.html" class="active">Transparência</a></li>
+                </ul>
+                <!-- Botão Área Restrita dentro do nav para mobile -->
+                <div class="nav-actions">
+                    <a href="index.html" class="btn-login">
+                        <i class="fas fa-lock"></i> Área Restrita
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Botão Hamburger (Só aparece no mobile) -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-        <a href="index.html" class="ghost-btn">Área Admin</a>
     </header>
 
+    <!-- CONTEÚDO PRINCIPAL -->
     <main class="pub-main">
 
         <!-- RESUMO -->
@@ -132,6 +164,18 @@
 
     </main>
 
+    <!-- Script do Menu Mobile -->
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+        if (menuToggle && mainNav) {
+            menuToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('open');
+            });
+        }
+    </script>
+
+    <!-- Script Específico da Transparência -->
     <script type="module" src="js/tranparencia.js"></script>
 </body>
 

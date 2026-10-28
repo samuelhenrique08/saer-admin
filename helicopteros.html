@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAER - Helicópteros</title>
+
+    <!-- Fonte Inter (necessária para o CSS novo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Ícones (Essencial para o menu mobile e cadeado) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS Global (O Rei agora é este) -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- CSS Específico desta página (Lembre de renomear para helicopteros.css) -->
+    <link rel="stylesheet" href="css/helicopteros.css">
+
+    <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+
+<body class="site-body">
+
+    <!-- HEADER PADRONIZADO -->
+    <header>
+        <div class="header-container">
+            <!-- Logo -->
+            <a href="home.html" class="logo">
+                <img src="img/saer-logo.png" alt="Logo SAER">
+                <span>SAER — RJ</span>
+            </a>
+
+            <!-- Menu de Navegação -->
+            <nav id="main-nav">
+                <ul>
+                    <!-- Como tudo está na raiz, os links são diretos -->
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="helicopteros.html" class="active">Helicópteros</a></li>
+                    <li><a href="galeria.html">Galeria</a></li>
+                    <li><a href="utilidades.html">Utilidades</a></li>
+                    <li><a href="memorial.html">Memorial</a></li>
+                    <li><a href="transparencia.html">Transparência</a></li>
+                </ul>
+                <!-- Botão Área Restrita -->
+                <div class="nav-actions">
+                    <a href="index.html" class="btn-login">
+                        <i class="fas fa-lock"></i> Área Restrita
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Botão Hamburger -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="page-container">
+
+        <!-- CABEÇALHO DA PÁGINA -->
+        <section class="helis-header">
+            <h1 class="page-title">HELICÓPTEROS</h1>
+            <p class="page-subtitle">Frota de Aeronaves do Serviço Aeropolicial</p>
+        </section>
+
+        <!-- GRID DE CARDS -->
+        <section class="helis-grid">
+
+            <!-- CARD 1: PHOENIX -->
+            <article class="helis-card">
+                <div class="card-image">
+                    <img src="img/heli-phoenix.png" alt="Helicóptero Phoenix">
+                    <span class="badge badge-yellow">PRINCIPAL</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-title-row">
+                        <h2>Phoenix</h2>
+                        <span class="model-tag">AS350</span>
+                    </div>
+                    <p class="card-desc">Helicóptero principal da frota SAER, utilizado em missões de patrulhamento,
+                        reconhecimento aéreo e apoio a operações terrestres. Leve, ágil e versátil.</p>
+
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <span class="spec-icon">⚡</span>
+                            <span class="spec-label">Velocidade</span>
+                            <span class="spec-value">Alta</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-icon">👥</span>
+                            <span class="spec-label">Tripulação</span>
+                            <span class="spec-value">2-4</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-icon">🎯</span>
+                            <span class="spec-label">Função</span>
+                            <span class="spec-value">Patrulha</span>
+                        </div>
+                    </div>
+
+                    <div class="used-by">
+                        <span class="used-label">USADO POR:</span>
+                        <div class="tags">
+                            <span class="tag">Piloto SAER</span>
+                            <span class="tag">Atirador SAER</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CARD 2: PELICANO (Resgate) -->
+            <article class="helis-card">
+                <div class="card-image">
+                    <img src="img/heli-pelicano.png" alt="Helicóptero Pelicano">
+                    <span class="badge badge-orange">RESGATE</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-title-row">
+                        <h2>Pelicano</h2>
+                        <span class="model-tag">UH1 (com guincho)</span>
+                    </div>
+                    <p class="card-desc">Versão equipada com guincho para operações de resgate e salvamento. Ideal para
+                        operações que exigem içamento de equipes ou resgate de vítimas.</p>
+
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <span class="spec-icon">⚡</span>
+                            <span class="spec-label">Velocidade</span>
+                            <span class="spec-value">Alta</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-icon">👥</span>
+                            <span class="spec-label">Tripulação</span>
+                            <span class="spec-value">5</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-icon">🚁</span>
+                            <span class="spec-label">Função</span>
+                            <span class="spec-value">Resgate</span>
+                        </div>
+                    </div>
+
+                    <div class="used-by">
+                        <span class="used-label">USADO POR:</span>
+                        <div class="tags">
+                            <span class="tag">Elite SAER</span>
+                            <span class="tag">CORE</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CARD 3: PELICANO (Combate) -->
+            <article class="helis-card">
+                <div class="card-image">
+                    <img src="img/heli-pelicano-combate.png" alt="Helicóptero Pelicano Combate">
+                    <span class="badge badge-red">COMBATE</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-title-row">
+                        <h2>Pelicano</h2>
+                        <span class="model-tag">UH1</span>
+                    </div>
+                    <p class="card-desc">Versão blindada do Pelicano para pacificações e apoio geral em operações.
+                        Robusto e confiável para missões diversas.</p>
+
+                    <div class="specs-grid">
+                        <div class="spec-item">
+                            <span class="spec-icon">⚡</span>
+                            <span class="spec-label">Velocidade</span>
+                            <span class="spec-value">Média</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-icon">👥</span>
+                            <span class="spec-label">Tripulação</span>
+                            <span class="spec-value">3</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-icon">🎯</span>
+                            <span class="spec-label">Função</span>
+                            <span class="spec-value">Pacificação</span>
+                        </div>
+                    </div>
+
+                    <div class="used-by">
+                        <span class="used-label">USADO POR:</span>
+                        <div class="tags">
+                            <span class="tag">Elite SAER</span>
+                            <span class="tag">CORE</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CARD 4: RANTOR (Afastado) -->
+            <article class="helis-card afastado">
+                <div class="card-image">
+                    <img src="img/heli-rantor.png" alt="Helicóptero Rantor">
+                    <span class="badge badge-dark">AFASTADO</span>
+                </div>
+                <div class="card-content">
+                    <div class="card-title-row">
+                        <h2>Rantor</h2>
+                        <span class="model-tag">Buzzard</span>
+                    </div>
+                    <p class="card-desc">Helicóptero atualmente afastado da frota principal para manutenção ou revisão.
+                    </p>
+
+                    <div class="specs-grid">
+                        <!-- Adicione specs se necessário -->
+                    </div>
+                </div>
+            </article>
+
+        </section>
+    </main>
+
+    <!-- Script simples para o menu mobile funcionar -->
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+
+        if (menuToggle && mainNav) {
+            menuToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('open');
+            });
+        }
+    </script>
+</body>
+
+</html>
