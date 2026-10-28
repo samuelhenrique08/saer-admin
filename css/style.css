@@ -34,10 +34,11 @@
 
 body {
   margin: 0;
-  background: var(--bg);
-  background-image:
-    radial-gradient(ellipse at top, rgba(201, 169, 97, .06), transparent 60%),
-    radial-gradient(ellipse at bottom, rgba(201, 169, 97, .03), transparent 60%);
+  background: black;
+  background-image: url(/img/bgSAER2.png);
+  /* background-size: none; */
+  background-repeat: no-repeat;
+  background-position: center;
   color: var(--text);
   min-height: 100vh;
 }
