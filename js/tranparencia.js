@@ -22,9 +22,9 @@ function formatWeekLabel(weekStartISO) {
 
 function metaFor(member) {
   if (['comandante', 'administrador'].includes(member.role)) return 0;
-  if (member.role === 'anjo negro elite') return 2;
-  if (member.division === 'core') return 0.5;
-  if (member.role === 'anjo negro') return 1;
+  if (member.role === 'anjo negro elite') return 1;
+  if (member.division === 'core') return 0.75;
+  if (member.role === 'anjo negro') return 2;
   return 0;
 }
 
