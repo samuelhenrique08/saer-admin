@@ -983,3 +983,37 @@ th {
   background: #000;
   display: block;
 }
+
+/* Nav bar e botão de Licitação */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-btn {
+  text-decoration: none;
+  color: var(--gold, #c9ad78);
+  /* Usa a cor dourada do seu painel */
+  border: 1px solid var(--gold, #c9ad78);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background: var(--gold, #c9ad78);
+  color: #111;
+}
+
+/* Faz a rolagem da página ser suave ao clicar no botão */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Compensa o header fixo ao rolar (evita que o título fique escondido) */
+#card-licitacao {
+  scroll-margin-top: 100px;
+}
