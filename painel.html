@@ -8,7 +8,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+
+    <!-- Libs do gerador de licitação -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 <body>
@@ -86,6 +92,56 @@
                 <tbody></tbody>
             </table>
         </section>
+
+        <!-- ================= NOVA SEÇÃO: LICITAÇÃO ================= -->
+        <section class="card licitacao" id="card-licitacao">
+            <div class="card-head">
+                <h2>Gerador — Licitação SAER</h2>
+            </div>
+
+            <div class="licitacao-grid">
+                <!-- Painel de controles -->
+                <div class="licitacao-panel">
+                    <label>Cole o ranking aqui</label>
+                    <textarea id="lic-txt" rows="10"></textarea>
+
+                    <label>Título</label>
+                    <input type="text" id="lic-titulo" value="Licitação SAER">
+
+                    <label>Valores (Top 1 / Top 2 / Top 3)</label>
+                    <div class="lic-row3">
+                        <input type="text" id="lic-v1" value="1500000">
+                        <input type="text" id="lic-v2" value="1000000">
+                        <input type="text" id="lic-v3" value="500000">
+                    </div>
+
+                    <div class="lic-chk">
+                        <input type="checkbox" id="lic-showAdm" checked>
+                        <span><b>Mostrar Admin. S.A.E.R.</b> (abaixo do total)</span>
+                    </div>
+
+                    <div id="lic-admBox">
+                        <label>Admins — um por linha: Nome | ID</label>
+                        <textarea id="lic-adm" rows="4"></textarea>
+                        <label>Valor de cada admin</label>
+                        <input type="text" id="lic-vAdm" value="700000">
+                    </div>
+
+                    <div class="lic-btns">
+                        <button id="lic-bPng" type="button">Baixar PNG</button>
+                        <button id="lic-bPdf" type="button">Baixar PDF</button>
+                        <button id="lic-bCopy" type="button" class="ghost">Copiar imagem</button>
+                    </div>
+                    <p class="lic-msg" id="lic-msg"></p>
+                </div>
+
+                <!-- Preview canvas (com overflow hidden no CSS para segurança) -->
+                <div class="licitacao-preview">
+                    <canvas id="lic-cv"></canvas>
+                </div>
+            </div>
+        </section>
+        <!-- ================= FIM DA SEÇÃO LICITAÇÃO ================= -->
 
         <!-- MODAL: strike -->
         <div class="modal-backdrop" id="modal-strike">
@@ -201,6 +257,7 @@
     </main>
 
     <script type="module" src="js/painel.js"></script>
+    <script type="module" src="js/licitacao.js"></script>
 </body>
 
 </html>
