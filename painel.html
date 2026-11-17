@@ -107,8 +107,6 @@
             <div class="licitacao-grid">
                 <!-- Painel de controles -->
                 <div class="licitacao-panel">
-                    <label>Cole o ranking aqui</label>
-                    <textarea id="lic-txt" rows="10"></textarea>
 
                     <label>Título</label>
                     <input type="text" id="lic-titulo" value="Licitação SAER">
@@ -260,9 +258,34 @@
         <!-- TOASTS -->
         <div id="toasts"></div>
     </main>
+    <!-- BOTÃO VOLTAR AO TOPO -->
+    <button id="btn-top" class="btn-top" title="Voltar ao topo">↑</button>
 
+    <!-- Seus scripts (mantenha os que já estão aí) -->
     <script type="module" src="js/painel.js"></script>
     <script type="module" src="js/licitacao.js"></script>
+
+    <!-- Script para o botão voltar ao topo -->
+    <script>
+        const btnTop = document.getElementById('btn-top');
+
+        // Mostra o botão se rolar mais de 300px
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                btnTop.classList.add('show');
+            } else {
+                btnTop.classList.remove('show');
+            }
+        });
+
+        // Rola para o topo suavemente ao clicar
+        btnTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
 </body>
 
 </html>

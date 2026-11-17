@@ -24,22 +24,29 @@ function parse(text) {
     for (const raw of text.split(/\r?\n/)) {
         const line = raw.trim();
         if (!line) continue;
-        const m = line.match(
-            /(\d+)\s*[º°ª]?\s*[—–-]+\s*@?\s*(.+?)\s*\|\s*([^|]+?)\s*\|\s*([^|—–]+?)\s*[—–-]+\s*(.+)$/
-        );
-        if (!m) continue;
-        const full = m[2].trim();
-        const nome = full.replace(/^\[[^\]]*\]\s*/, "").trim();
-        out.push({
-            pos: +m[1],
-            full,
-            nome,
-            id: m[3].trim(),
-            discord: m[4].trim(),
-            tempo: m[5].trim(),
-        });
+
+        // Tenta o formato do painel: @[CMD SAER] Scott | 1617 | 525318781451501569 — 22h:51min:26s
+        let m = line.match(/@?\[?CMD\s*SAER\]?\s*(.+?)\s*\|\s*([^|]+?)\s*\|\s*([^—–-]+?)\s*[—–-]+\s*(.+)$/i);
+
+        // Se não achar, tenta o formato original do gerador: 1º — @Nome | ID | Discord — tempo
+        if (!m) {
+            m = line.match(/(\d+)\s*[º°ª]?\s*[—–-]+\s*@?\s*(.+?)\s*\|\s*([^|]+?)\s*\|\s*([^|—–]+?)\s*[—–-]+\s*(.+)$/);
+            if (m) {
+                // Formato original: pos, full, id, discord, tempo
+                const full = m[2].trim();
+                const nome = full.replace(/^\[[^\]]*\]\s*/, '').trim();
+                out.push({ pos: +m[1], full, nome, id: m[3].trim(), discord: m[4].trim(), tempo: m[5].trim() });
+            }
+        } else {
+            // Formato do painel: full, id, discord, tempo (posição será definida depois)
+            const full = m[1].trim();
+            const nome = full.replace(/^\[[^\]]*\]\s*/, '').trim();
+            out.push({ pos: 0, full, nome, id: m[2].trim(), discord: m[3].trim(), tempo: m[4].trim() });
+        }
     }
-    return out.sort((a, b) => a.pos - b.pos);
+
+    // Ordena: se tiver posição (formato antigo), usa ela. Senão, mantém a ordem da linha.
+    return out.sort((a, b) => (a.pos || 999) - (b.pos || 999)).map((r, i) => ({ ...r, pos: i + 1 }));
 }
 
 // ---------- desenho ----------
@@ -63,7 +70,7 @@ function box(x1, y1, x2, y2) {
 function draw() {
     if (!cv) return;
 
-    const rows = parse($("lic-txt").value);
+    const rows = parse($("prompt-input").value || "");
     lastParsed = rows;
 
     const showAdm = $("lic-showAdm").checked;
@@ -82,7 +89,7 @@ function draw() {
 
     const H = Math.max(BASE_H, 568 + adms.length * 43 + 25);
 
-    cv.width = W * SCALE; 
+    cv.width = W * SCALE;
     cv.height = H * SCALE;
     cv.style.aspectRatio = `${W} / ${H}`;
     ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
@@ -152,11 +159,10 @@ function draw() {
 
     const m = $("lic-msg");
     if (!rows.length) {
-        m.textContent =
-            "Nenhuma linha reconhecida. Formato: 1º — @Nome | ID | DiscordID — tempo";
+        m.textContent = "Nenhuma linha reconhecida no prompt. Cole o prompt no campo acima.";
         m.className = "lic-msg err";
     } else {
-        m.textContent = rows.length + " colocado(s) lido(s).";
+        m.textContent = rows.length + " membro(s) lido(s) do prompt.";
         m.className = "lic-msg";
     }
 }
@@ -222,8 +228,8 @@ function initLicitacao() {
     logo.src = LOGO_SRC;
     logo.onload = draw;
 
-    // listeners
-    ["lic-txt", "lic-titulo", "lic-v1", "lic-v2", "lic-v3", "lic-showAdm", "lic-adm", "lic-vAdm"].forEach((id) => {
+    // listeners (agora escuta o prompt principal do painel!)
+    ["prompt-input", "lic-titulo", "lic-v1", "lic-v2", "lic-v3", "lic-showAdm", "lic-adm", "lic-vAdm"].forEach((id) => {
         const el = $(id);
         if (el) el.addEventListener("input", draw);
     });
